@@ -1,0 +1,15 @@
+#!/bin/sh
+
+echo "HOOK TRIGGERED"
+
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
+
+pattern="^PROJ-[0-9]+:"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "ERROR: Commit message does not follow the required pattern."
+  echo "It should start with a ticket number like 'PROJ-123: Your message'"
+  exit 1
+fi
+
